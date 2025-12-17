@@ -282,3 +282,62 @@ BEGIN
     ALTER TABLE NguoiDung ADD Theme NVARCHAR(20) DEFAULT 'Light';
     PRINT 'Đã thêm cột Theme thành công!';
 END
+
+
+USE QL_ebook;
+GO
+
+-- 1. Xóa ràng buộc khóa ngoại từ bảng Sach đến NhaXuatBan (nếu có)
+IF EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'FK_Sach_NhaXuatBan') AND parent_object_id = OBJECT_ID(N'Sach'))
+BEGIN
+    ALTER TABLE Sach DROP CONSTRAINT FK_Sach_NhaXuatBan;
+    PRINT 'Da xoa rang buoc FK_Sach_NhaXuatBan';
+END
+GO
+
+-- 2. Xóa cột MaNhaXuatBan trong bảng Sach (vì không dùng bảng NXB nữa)
+IF EXISTS(SELECT * FROM sys.columns WHERE Name = N'MaNhaXuatBan' AND Object_ID = Object_ID(N'Sach'))
+BEGIN
+    ALTER TABLE Sach DROP COLUMN MaNhaXuatBan;
+    PRINT 'Da xoa cot MaNhaXuatBan trong bang Sach';
+END
+GO
+
+-- 3. Xóa các bảng không sử dụng
+-- Xóa bảng Plugin
+IF OBJECT_ID('Plugin', 'U') IS NOT NULL
+BEGIN
+    DROP TABLE Plugin;
+    PRINT 'Da xoa bang Plugin';
+END
+
+-- Xóa bảng DanhDauTrang (Vì đã dùng VT_DocSach và GhiChu)
+IF OBJECT_ID('DanhDauTrang', 'U') IS NOT NULL
+BEGIN
+    DROP TABLE DanhDauTrang;
+    PRINT 'Da xoa bang DanhDauTrang';
+END
+
+-- Xóa bảng liên kết Sach_TheLoai trước
+IF OBJECT_ID('Sach_TheLoai', 'U') IS NOT NULL
+BEGIN
+    DROP TABLE Sach_TheLoai;
+    PRINT 'Da xoa bang Sach_TheLoai';
+END
+
+-- Xóa bảng TheLoai
+IF OBJECT_ID('TheLoai', 'U') IS NOT NULL
+BEGIN
+    DROP TABLE TheLoai;
+    PRINT 'Da xoa bang TheLoai';
+END
+
+-- Xóa bảng NhaXuatBan
+IF OBJECT_ID('NhaXuatBan', 'U') IS NOT NULL
+BEGIN
+    DROP TABLE NhaXuatBan;
+    PRINT 'Da xoa bang NhaXuatBan';
+END
+
+GO
+PRINT 'HOAN TAT DON DEP DATABASE!';
