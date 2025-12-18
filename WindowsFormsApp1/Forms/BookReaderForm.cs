@@ -19,7 +19,7 @@ namespace WindowsFormsApp1.Forms
         // ======================= CORE DATA =======================
         private readonly Book _book;
         private readonly BookReaderService _readerService;
-        private readonly GeminiService _geminiService;
+        private readonly GitHubModelService _aiService;
         private List<BookChapter> _chapters = new List<BookChapter>();
 
         // [QUAN TRỌNG] Biến cờ xác định đây có phải sách PDF không
@@ -98,7 +98,7 @@ namespace WindowsFormsApp1.Forms
             _targetPosition = jumpPos;
 
             _readerService = new BookReaderService(DataManager.Instance);
-            _geminiService = new GeminiService();
+            _aiService = new GitHubModelService();
 
             SetupModernUI();
             InitializeFloatingMenu();
@@ -387,7 +387,7 @@ namespace WindowsFormsApp1.Forms
                 return sb.ToString();
             });
 
-            try { string answer = await _geminiService.AskGemini(context, question); pnlChatHistory.Controls.Remove(lblTyping); AddChatBubble(answer, false); }
+            try { string answer = await _aiService.AskAI(context, question); pnlChatHistory.Controls.Remove(lblTyping); AddChatBubble(answer, false); }
             catch (Exception ex) { pnlChatHistory.Controls.Remove(lblTyping); AddChatBubble("Lỗi: " + ex.Message, false, true); }
         }
 

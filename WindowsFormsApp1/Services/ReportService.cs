@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
@@ -16,12 +16,12 @@ namespace WindowsFormsApp1.Services
         {
             try
             {
-                // T?o n?i dung b·o c·o HTML/CSV
+                // T·∫°o n·ªôi dung b√°o c√°o HTML/CSV
                 SaveFileDialog saveDialog = new SaveFileDialog
                 {
                     Filter = "HTML Files (*.html)|*.html|CSV Files (*.csv)|*.csv",
                     FileName = $"BaoCaoSach_{DateTime.Now:yyyyMMdd_HHmmss}",
-                    Title = "L˝u b·o c·o"
+                    Title = "L∆∞u b√°o c√°o"
                 };
 
                 if (saveDialog.ShowDialog() == DialogResult.OK)
@@ -39,21 +39,28 @@ namespace WindowsFormsApp1.Services
                     }
 
                     var result = MessageBox.Show(
-                        $"B·o c·o ? ˝?c l˝u th‡nh cÙng!\n\nB?n cÛ mu?n m? file b·o c·o khÙng?",
-                        "Th‡nh cÙng",
+                        "B√°o c√°o ƒë√£ ƒë∆∞·ª£c l∆∞u th√†nh c√¥ng!\n\nB·∫°n c√≥ mu·ªën m·ªü file b√°o c√°o kh√¥ng?",
+                        "Th√†nh c√¥ng",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Information
                     );
 
                     if (result == DialogResult.Yes)
                     {
-                        System.Diagnostics.Process.Start(fileName);
+                        try
+                        {
+                            System.Diagnostics.Process.Start(fileName);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Kh√¥ng th·ªÉ m·ªü file t·ª± ƒë·ªông. Vui l√≤ng m·ªü th·ªß c√¥ng.", "L·ªói", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"L?i khi t?o b·o c·o: {ex.Message}", "L?i", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"L·ªói khi t·∫°o b√°o c√°o: {ex.Message}", "L·ªói", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -66,7 +73,7 @@ namespace WindowsFormsApp1.Services
             html.AppendLine("<head>");
             html.AppendLine("    <meta charset='UTF-8'>");
             html.AppendLine("    <meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-            html.AppendLine("    <title>B·o c·o Danh s·ch S·ch</title>");
+            html.AppendLine("    <title>B√°o c√°o Danh s√°ch S√°ch</title>");
             html.AppendLine("    <style>");
             html.AppendLine("        * { margin: 0; padding: 0; box-sizing: border-box; }");
             html.AppendLine("        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; padding: 20px; }");
@@ -85,23 +92,23 @@ namespace WindowsFormsApp1.Services
             html.AppendLine("</head>");
             html.AppendLine("<body>");
             html.AppendLine("    <div class='container'>");
-            html.AppendLine($"        <h1>?? B¡O C¡O DANH S¡CH S¡CH</h1>");
+            html.AppendLine($"        <h1>B√ÅO C√ÅO DANH S√ÅCH S√ÅCH</h1>");
             html.AppendLine("        <div class='info'>");
-            html.AppendLine($"            <p><strong>?? Ng˝?i d˘ng:</strong> {displayName}</p>");
-            html.AppendLine($"            <p><strong>?? Ng‡y t?o b·o c·o:</strong> {DateTime.Now:dd/MM/yyyy HH:mm:ss}</p>");
-            html.AppendLine($"            <p><strong>?? T?ng s? s·ch:</strong> {books.Count} cu?n</p>");
+            html.AppendLine($"            <p><strong>Ng∆∞·ªùi d√πng:</strong> {System.Security.SecurityElement.Escape(displayName)}</p>");
+            html.AppendLine($"            <p><strong>Ng√†y t·∫°o b√°o c√°o:</strong> {DateTime.Now:dd/MM/yyyy HH:mm:ss}</p>");
+            html.AppendLine($"            <p><strong>T·ªïng s·ªë s√°ch:</strong> {books.Count} cu·ªën</p>");
             html.AppendLine("        </div>");
             
             html.AppendLine("        <table>");
             html.AppendLine("            <thead>");
             html.AppendLine("                <tr>");
             html.AppendLine("                    <th>STT</th>");
-            html.AppendLine("                    <th>TÍn s·ch</th>");
-            html.AppendLine("                    <th>T·c gi?</th>");
-            html.AppendLine("                    <th>–?nh d?ng</th>");
-            html.AppendLine("                    <th>Ti?n ? ?c</th>");
-            html.AppendLine("                    <th>Ng‡y thÍm</th>");
-            html.AppendLine("                    <th>YÍu thÌch</th>");
+            html.AppendLine("                    <th>T√™n s√°ch</th>");
+            html.AppendLine("                    <th>T√°c gi·∫£</th>");
+            html.AppendLine("                    <th>ƒê·ªãnh d·∫°ng</th>");
+            html.AppendLine("                    <th>Ti·∫øn ƒë·ªô ƒë·ªçc</th>");
+            html.AppendLine("                    <th>Ng√†y th√™m</th>");
+            html.AppendLine("                    <th>Y√™u th√≠ch</th>");
             html.AppendLine("                </tr>");
             html.AppendLine("            </thead>");
             html.AppendLine("            <tbody>");
@@ -113,21 +120,21 @@ namespace WindowsFormsApp1.Services
                 html.AppendLine($"                    <td>{index++}</td>");
                 html.AppendLine($"                    <td><strong>{System.Security.SecurityElement.Escape(book.Title)}</strong></td>");
                 html.AppendLine($"                    <td>{System.Security.SecurityElement.Escape(book.Author)}</td>");
-                html.AppendLine($"                    <td>{book.FileType.ToUpper()}</td>");
+                html.AppendLine($"                    <td>{System.Security.SecurityElement.Escape(book.FileType).ToUpper()}</td>");
                 html.AppendLine($"                    <td>");
                 html.AppendLine($"                        <div class='progress'>");
                 html.AppendLine($"                            <div class='progress-bar' style='width: {book.Progress}%'>{book.Progress:F1}%</div>");
                 html.AppendLine($"                        </div>");
                 html.AppendLine($"                    </td>");
                 html.AppendLine($"                    <td>{book.DateAdded:dd/MM/yyyy}</td>");
-                html.AppendLine($"                    <td class='favorite'>{(book.IsFavorite ? "??" : "")}</td>");
+                html.AppendLine($"                    <td class='favorite'>{(book.IsFavorite ? "‚òÖ" : "")}</td>");
                 html.AppendLine("                </tr>");
             }
 
             html.AppendLine("            </tbody>");
             html.AppendLine("        </table>");
             html.AppendLine("        <div class='footer'>");
-            html.AppendLine("            <p>?? B·o c·o ˝?c t?o b?i Koodo Reader</p>");
+            html.AppendLine("            <p>B√°o c√°o ƒë∆∞·ª£c t·∫°o b·ªüi Koodo Reader</p>");
             html.AppendLine("        </div>");
             html.AppendLine("    </div>");
             html.AppendLine("</body>");
@@ -141,14 +148,14 @@ namespace WindowsFormsApp1.Services
             StringBuilder csv = new StringBuilder();
             
             // Header
-            csv.AppendLine($"# B¡O C¡O DANH S¡CH S¡CH");
-            csv.AppendLine($"# Ng˝?i d˘ng: {displayName}");
-            csv.AppendLine($"# Ng‡y t?o: {DateTime.Now:dd/MM/yyyy HH:mm:ss}");
-            csv.AppendLine($"# T?ng s? s·ch: {books.Count}");
+            csv.AppendLine("# B√ÅO C√ÅO DANH S√ÅCH S√ÅCH");
+            csv.AppendLine($"# Ng∆∞·ªùi d√πng: {displayName}");
+            csv.AppendLine($"# Ng√†y t·∫°o: {DateTime.Now:dd/MM/yyyy HH:mm:ss}");
+            csv.AppendLine($"# T·ªïng s·ªë s√°ch: {books.Count}");
             csv.AppendLine();
             
             // Column headers
-            csv.AppendLine("STT,TÍn s·ch,T·c gi?,–?nh d?ng,Ti?n ? ?c (%),Ng‡y thÍm,YÍu thÌch");
+            csv.AppendLine("STT,T√™n s√°ch,T√°c gi·∫£,ƒê·ªãnh d·∫°ng,Ti·∫øn ƒë·ªô ƒë·ªçc (%),Ng√†y th√™m,Y√™u th√≠ch");
 
             // Data rows
             int index = 1;
@@ -158,7 +165,7 @@ namespace WindowsFormsApp1.Services
                 string author = EscapeCsvField(book.Author);
                 string progress = book.Progress.ToString("F1");
                 string dateAdded = book.DateAdded.ToString("dd/MM/yyyy");
-                string favorite = book.IsFavorite ? "CÛ" : "KhÙng";
+                string favorite = book.IsFavorite ? "C√≥" : "Kh√¥ng";
 
                 csv.AppendLine($"{index++},{title},{author},{book.FileType},{progress},{dateAdded},{favorite}");
             }
@@ -171,7 +178,7 @@ namespace WindowsFormsApp1.Services
             if (string.IsNullOrEmpty(field))
                 return "\"\"";
 
-            // N?u cÛ d?u ph?y, d?u ngo?c kÈp ho?c xu?ng d?ng th? b?c trong d?u ngo?c kÈp
+            // N·∫øu c√≥ d·∫•u ph·∫©y, d·∫•u ngo·∫∑c k√©p ho·∫∑c xu·ªëng d√≤ng th√¨ b·ªçc trong d·∫•u ngo·∫∑c k√©p
             if (field.Contains(",") || field.Contains("\"") || field.Contains("\n"))
             {
                 return "\"" + field.Replace("\"", "\"\"") + "\"";
@@ -182,24 +189,24 @@ namespace WindowsFormsApp1.Services
 
         public void CreateNotesReport(Book book, List<Highlight> highlights)
         {
-            MessageBox.Show("Ch?c n„ng xu?t ghi ch˙ ch˝a ˝?c tri?n khai.", "ThÙng b·o", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Ch·ª©c nƒÉng xu·∫•t ghi ch√∫ ch∆∞a ƒë∆∞·ª£c tri·ªÉn khai.", "Th√¥ng b√°o", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        // [M?I] B·o c·o t?ng h?p ghi ch˙ v‡ ·nh d?u
+        // [M·ªõi] B√°o c√°o t·ªïng h·ª£p ghi ch√∫ v√† ƒë√°nh d·∫•u
         public void CreateHighlightsNotesReport(List<Highlight> highlights, List<Highlight> notes, string displayName)
         {
             // TODO: Implement PDF/Excel export
-            string message = $"B·o c·o cho {displayName}\n\n";
-            message += $"?? T?ng s? ·nh d?u: {highlights.Count}\n";
-            message += $"?? T?ng s? ghi ch˙: {notes.Count}\n\n";
-            message += "Ch?c n„ng xu?t file PDF/Excel ang ˝?c ph·t tri?n.";
+            string message = $"B√°o c√°o cho {displayName}\n\n";
+            message += $"T·ªïng s·ªë ƒë√°nh d·∫•u: {highlights.Count}\n";
+            message += $"T·ªïng s·ªë ghi ch√∫: {notes.Count}\n\n";
+            message += "Ch·ª©c nƒÉng xu·∫•t file PDF/Excel ƒëang ƒë∆∞·ª£c ph√°t tri·ªÉn.";
             
-            MessageBox.Show(message, "B·o c·o Ghi ch˙ & –·nh d?u", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(message, "B√°o c√°o Ghi ch√∫ & ƒê√°nh d·∫•u", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public void CreateGoalsReport(int userId, ReadingStreak streak, int todayMinutes, int monthlyBooks, int yearlyBooks, object weeklyStats, object goals)
         {
-            MessageBox.Show("Ch?c n„ng b·o c·o m?c tiÍu ch˝a ˝?c tri?n khai.", "ThÙng b·o", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Ch·ª©c nƒÉng b√°o c√°o m·ª•c ti√™u ch∆∞a ƒë∆∞·ª£c tri·ªÉn khai.", "Th√¥ng b√°o", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
