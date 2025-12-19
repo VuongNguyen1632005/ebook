@@ -1,8 +1,6 @@
 namespace WindowsFormsApp1.Models
 {
-    /// <summary>
-    /// Model ð?i di?n cho k? sách
-    /// </summary>
+  
     public class Shelf
     {
         public int Id { get; set; }

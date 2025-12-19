@@ -1,11 +1,9 @@
 namespace WindowsFormsApp1.Constants
 {
-    /// <summary>
-    /// Các h?ng s? dùng chung trong ?ng d?ng
-    /// </summary>
+  
     public static class AppConstants
     {
-        // Thý m?c
+       
         public const string COVER_IMAGES_FOLDER = "CoverImages";
         
         // File extensions

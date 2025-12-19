@@ -2,9 +2,7 @@ using System;
 
 namespace WindowsFormsApp1.Models
 {
-    /// <summary>
-    /// Model ð?i di?n cho m?c tiêu ð?c sách
-    /// </summary>
+ 
     public class ReadingGoal
     {
         public int Id { get; set; }
@@ -16,9 +14,7 @@ namespace WindowsFormsApp1.Models
         public DateTime? CompletedDate { get; set; }
     }
 
-    /// <summary>
-    /// Streak (Chu?i ngày ð?c liên t?c)
-    /// </summary>
+  
     public class ReadingStreak
     {
         public int UserId { get; set; }
@@ -27,9 +23,7 @@ namespace WindowsFormsApp1.Models
         public DateTime LastReadDate { get; set; }
     }
 
-    /// <summary>
-    /// Th?ng kê ð?c sách theo ngày
-    /// </summary>
+  
     public class DailyReadingStats
     {
         public DateTime Date { get; set; }

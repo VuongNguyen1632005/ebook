@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
@@ -112,7 +112,7 @@ namespace WindowsFormsApp1.Services
                         if (epub.CoverImage != null && epub.CoverImage.Length > 0)
                             book.CoverImagePath = SaveCoverImage(epub.CoverImage, Path.GetFileNameWithoutExtension(filePath));
                     }
-                    catch (Exception ex) { Console.WriteLine($"L?i Metadata EPUB: {ex.Message}"); }
+                    catch (Exception ex) { Console.WriteLine($"Lỗi Metadata EPUB: {ex.Message}"); }
                 }
                 else if (ext == ".pdf")
                 {
@@ -142,7 +142,7 @@ namespace WindowsFormsApp1.Services
                             catch { }
                         }
                     }
-                    catch (Exception ex) { Console.WriteLine($"L?i Metadata PDF: {ex.Message}"); }
+                    catch (Exception ex) { Console.WriteLine($"Lỗi Metadata PDF: {ex.Message}"); }
                 }
 
                 if (ext != ".pdf")
@@ -159,7 +159,7 @@ namespace WindowsFormsApp1.Services
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"L?i file {Path.GetFileName(filePath)}: {ex.Message}");
+                MessageBox.Show($"Lỗi file {Path.GetFileName(filePath)}: {ex.Message}");
                 return null;
             }
         }
@@ -205,10 +205,10 @@ namespace WindowsFormsApp1.Services
                 }
                 catch (Exception ex)
                 {
-                    onProgress?.Invoke($"L?i: {ex.Message}");
+                    onProgress?.Invoke($"Lỗi: {ex.Message}");
                 }
             }
-            onProgress?.Invoke($"HO�N T?T! Th�m: {imported}, B? qua: {skipped}.");
+            onProgress?.Invoke($"HOÀN TấT! Thêm: {imported}, Bỏ qua: {skipped}.");
         }
     }
 }

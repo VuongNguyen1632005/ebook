@@ -2,9 +2,7 @@ using System.Drawing;
 
 namespace WindowsFormsApp1.Constants
 {
-    /// <summary>
-    /// Ð?nh ngh?a các màu s?c cho theme
-    /// </summary>
+    
     public static class ThemeColors
     {
         // Dark Theme Colors

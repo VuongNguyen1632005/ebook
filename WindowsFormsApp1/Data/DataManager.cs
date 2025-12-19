@@ -95,7 +95,7 @@ namespace WindowsFormsApp1.Data
             return null;
         }
 
-        // [MỚI] Lấy thông tin user theo ID
+        // Lấy thông tin user theo ID
         public User GetUserById(int userId)
         {
             string query = "SELECT MaNguoiDung, TenDangNhap, TenHienThi, Email FROM NguoiDung WHERE MaNguoiDung = @UserId";
@@ -407,7 +407,7 @@ namespace WindowsFormsApp1.Data
 
         public void PermanentDeleteBook(int bookId)
         {
-            // Alias method for consistency
+            
             PermanentlyDeleteBook(bookId);
         }
 
@@ -753,7 +753,7 @@ namespace WindowsFormsApp1.Data
             }
         }
 
-        // --- [MỚI] CÁC HÀM LẤY SÁCH THEO ĐIỀU KIỆN (HIGHLIGHT/NOTE) ---
+        // ] CÁC HÀM LẤY SÁCH THEO ĐIỀU KIỆN (HIGHLIGHT/NOTE) ---
 
         // 1. Lấy danh sách sách CÓ Highlight
         public List<Book> GetBooksWithHighlights()
@@ -910,7 +910,7 @@ namespace WindowsFormsApp1.Data
             }
         }
 
-        // --- THÊM V ÀO DataManager.cs ---
+       
 
         // 1. Xác thực mật khẩu hiện tại (Dùng cho bước yêu cầu nhập lại pass)
         public bool VerifyCurrentPassword(int userId, string password)
@@ -1228,7 +1228,7 @@ namespace WindowsFormsApp1.Data
             }
         }
 
-        // [MỚI] Lấy số cuốn đã đọc trong tháng
+        //  Lấy số cuốn đã đọc trong tháng
         public int GetMonthlyBooksRead(int userId)
         {
             string query = @"

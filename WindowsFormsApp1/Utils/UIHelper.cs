@@ -10,9 +10,7 @@ namespace WindowsFormsApp1.Utils
     /// </summary>
     public static class UIHelper
     {
-        /// <summary>
-        /// T?o GraphicsPath cho h?nh ch? nh?t bo góc
-        /// </summary>
+   
         public static GraphicsPath GetRoundedRectangle(Rectangle bounds, int radius)
         {
             int diameter = radius * 2;
@@ -45,17 +43,13 @@ namespace WindowsFormsApp1.Utils
             return path;
         }
 
-        /// <summary>
-        /// T?o màu hover (sáng hõn)
-        /// </summary>
+      
         public static Color GetHoverColor(Color baseColor)
         {
             return ControlPaint.Light(baseColor);
         }
 
-        /// <summary>
-        /// T?o màu pressed (t?i hõn)
-        /// </summary>
+        
         public static Color GetPressedColor(Color baseColor)
         {
             return ControlPaint.Dark(baseColor);
@@ -79,9 +73,7 @@ namespace WindowsFormsApp1.Utils
             button.Region = new Region(GetRoundedRectangle(new Rectangle(0, 0, button.Width, button.Height), radius));
         }
 
-        /// <summary>
-        /// Áp d?ng style cho input container
-        /// </summary>
+      
         public static void StyleInputContainer(Panel container, int radius = 6)
         {
             if (container == null) return;
@@ -89,9 +81,7 @@ namespace WindowsFormsApp1.Utils
             container.Padding = new Padding(1);
         }
 
-        /// <summary>
-        /// Áp d?ng style cho primary button
-        /// </summary>
+      
         public static void StylePrimaryButton(Button button, int radius = 6)
         {
             if (button == null) return;
@@ -103,9 +93,7 @@ namespace WindowsFormsApp1.Utils
             button.Cursor = Cursors.Hand;
         }
 
-        /// <summary>
-        /// Áp d?ng style cho secondary button  
-        /// </summary>
+      
         public static void StyleSecondaryButton(Button button, int radius = 6)
         {
             if (button == null) return;
@@ -117,9 +105,7 @@ namespace WindowsFormsApp1.Utils
             button.Cursor = Cursors.Hand;
         }
 
-        /// <summary>
-        /// V? border v?i gradient
-        /// </summary>
+       
         public static void DrawGradientBorder(Graphics g, Rectangle bounds, Color startColor, Color endColor, int width = 2)
         {
             using (LinearGradientBrush brush = new LinearGradientBrush(bounds, startColor, endColor, 45f))

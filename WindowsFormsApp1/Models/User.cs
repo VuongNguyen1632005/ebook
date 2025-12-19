@@ -1,8 +1,6 @@
 namespace WindowsFormsApp1.Models
 {
-    /// <summary>
-    /// Model ð?i di?n cho ngý?i dùng trong h? th?ng
-    /// </summary>
+  
     public class User
     {
         public int Id { get; set; }

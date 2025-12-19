@@ -2,9 +2,7 @@ using System;
 
 namespace WindowsFormsApp1.Models
 {
-    /// <summary>
-    /// Model ð?i di?n cho highlight/note trong sách
-    /// </summary>
+ 
     public class Highlight
     {
         public int Id { get; set; }

@@ -25,8 +25,7 @@ namespace WindowsFormsApp1.Services
         {
             try
             {
-                // Giảm từ 40,000 xuống còn khoảng 15,000 ký tự để an toàn
-                // 15,000 ký tự thường rơi vào khoảng 4,000 - 5,000 tokens
+               
                 string safeContext = contextText.Length > 15000
                     ? contextText.Substring(0, 15000)
                     : contextText;
@@ -41,7 +40,7 @@ namespace WindowsFormsApp1.Services
             },
                     Model = MODEL_NAME,
                     Temperature = 0.7f,
-                    // MaxTokens ở đây là giới hạn của câu TRẢ LỜI từ AI
+                   
                     MaxTokens = 1000
                 };
 
