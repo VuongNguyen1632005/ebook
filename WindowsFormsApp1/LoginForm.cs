@@ -11,6 +11,7 @@ namespace WindowsFormsApp1.Forms
     public partial class LoginForm : Form
     {
         public User LoggedInUser { get; private set; }
+        private bool isPasswordVisible = false;
 
         public LoginForm()
         {
@@ -61,6 +62,26 @@ namespace WindowsFormsApp1.Forms
 
         #endregion
 
+        #region Event Handlers - Password Toggle
+
+        private void BtnTogglePassword_Click(object sender, EventArgs e)
+        {
+            isPasswordVisible = !isPasswordVisible;
+            
+            if (isPasswordVisible)
+            {
+                txtPass.PasswordChar = '\0';
+                btnTogglePassword.Text = "🙈";
+            }
+            else
+            {
+                txtPass.PasswordChar = '●';
+                btnTogglePassword.Text = "👁";
+            }
+        }
+
+        #endregion
+
         #region Event Handlers - TextBox Focus Effects
 
         private void TxtUser_Enter(object sender, EventArgs e)
@@ -82,6 +103,7 @@ namespace WindowsFormsApp1.Forms
             pnlPassContainer.BackColor = Color.FromArgb(55, 55, 60);
             pnlPassIcon.BackColor = Color.FromArgb(55, 55, 60);
             txtPass.BackColor = Color.FromArgb(55, 55, 60);
+            btnTogglePassword.BackColor = Color.FromArgb(55, 55, 60);
         }
 
         private void TxtPass_Leave(object sender, EventArgs e)
@@ -89,6 +111,7 @@ namespace WindowsFormsApp1.Forms
             pnlPassContainer.BackColor = Color.FromArgb(45, 45, 50);
             pnlPassIcon.BackColor = Color.FromArgb(45, 45, 50);
             txtPass.BackColor = Color.FromArgb(45, 45, 50);
+            btnTogglePassword.BackColor = Color.FromArgb(45, 45, 50);
         }
 
         #endregion

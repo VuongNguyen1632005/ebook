@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -23,6 +24,19 @@ namespace WindowsFormsApp1.Utils
                 }
                 return builder.ToString();
             }
+        }
+
+        public static bool IsValidPassword(string password)
+        {
+            if (string.IsNullOrEmpty(password) || password.Length < 6)
+                return false;
+
+            bool hasUpper = password.Any(char.IsUpper);
+            bool hasLower = password.Any(char.IsLower);
+            bool hasDigit = password.Any(char.IsDigit);
+            bool hasSpecial = password.Any(ch => !char.IsLetterOrDigit(ch));
+
+            return hasUpper && hasLower && hasDigit && hasSpecial;
         }
     }
 }

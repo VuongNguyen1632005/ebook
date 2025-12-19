@@ -36,10 +36,12 @@
             this.pnlDivider = new System.Windows.Forms.Panel();
             this.btnRegister = new System.Windows.Forms.Button();
             this.pnlConfirmContainer = new System.Windows.Forms.Panel();
+            this.btnToggleConfirmPassword = new System.Windows.Forms.Button();
             this.txtConfirm = new System.Windows.Forms.TextBox();
             this.lblConfirmIcon = new System.Windows.Forms.Label();
             this.lblConfirm = new System.Windows.Forms.Label();
             this.pnlPassContainer = new System.Windows.Forms.Panel();
+            this.btnTogglePassword = new System.Windows.Forms.Button();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.lblPassIcon = new System.Windows.Forms.Label();
             this.lblPass = new System.Windows.Forms.Label();
@@ -184,6 +186,7 @@
             // pnlConfirmContainer
             // 
             this.pnlConfirmContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(50)))));
+            this.pnlConfirmContainer.Controls.Add(this.btnToggleConfirmPassword);
             this.pnlConfirmContainer.Controls.Add(this.txtConfirm);
             this.pnlConfirmContainer.Controls.Add(this.lblConfirmIcon);
             this.pnlConfirmContainer.Location = new System.Drawing.Point(50, 510);
@@ -192,6 +195,23 @@
             this.pnlConfirmContainer.Padding = new System.Windows.Forms.Padding(1);
             this.pnlConfirmContainer.Size = new System.Drawing.Size(378, 46);
             this.pnlConfirmContainer.TabIndex = 12;
+            // 
+            // btnToggleConfirmPassword
+            // 
+            this.btnToggleConfirmPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(50)))));
+            this.btnToggleConfirmPassword.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnToggleConfirmPassword.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnToggleConfirmPassword.FlatAppearance.BorderSize = 0;
+            this.btnToggleConfirmPassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnToggleConfirmPassword.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnToggleConfirmPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.btnToggleConfirmPassword.Location = new System.Drawing.Point(333, 1);
+            this.btnToggleConfirmPassword.Name = "btnToggleConfirmPassword";
+            this.btnToggleConfirmPassword.Size = new System.Drawing.Size(44, 44);
+            this.btnToggleConfirmPassword.TabIndex = 2;
+            this.btnToggleConfirmPassword.Text = "👁";
+            this.btnToggleConfirmPassword.UseVisualStyleBackColor = false;
+            this.btnToggleConfirmPassword.Click += new System.EventHandler(this.BtnToggleConfirmPassword_Click);
             // 
             // txtConfirm
             // 
@@ -204,7 +224,7 @@
             this.txtConfirm.Margin = new System.Windows.Forms.Padding(4);
             this.txtConfirm.Name = "txtConfirm";
             this.txtConfirm.PasswordChar = '●';
-            this.txtConfirm.Size = new System.Drawing.Size(325, 20);
+            this.txtConfirm.Size = new System.Drawing.Size(281, 20);
             this.txtConfirm.TabIndex = 1;
             // 
             // lblConfirmIcon
@@ -236,6 +256,7 @@
             // pnlPassContainer
             // 
             this.pnlPassContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(50)))));
+            this.pnlPassContainer.Controls.Add(this.btnTogglePassword);
             this.pnlPassContainer.Controls.Add(this.txtPass);
             this.pnlPassContainer.Controls.Add(this.lblPassIcon);
             this.pnlPassContainer.Location = new System.Drawing.Point(50, 434);
@@ -244,6 +265,23 @@
             this.pnlPassContainer.Padding = new System.Windows.Forms.Padding(1);
             this.pnlPassContainer.Size = new System.Drawing.Size(378, 46);
             this.pnlPassContainer.TabIndex = 10;
+            // 
+            // btnTogglePassword
+            // 
+            this.btnTogglePassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(50)))));
+            this.btnTogglePassword.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTogglePassword.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnTogglePassword.FlatAppearance.BorderSize = 0;
+            this.btnTogglePassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTogglePassword.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnTogglePassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.btnTogglePassword.Location = new System.Drawing.Point(333, 1);
+            this.btnTogglePassword.Name = "btnTogglePassword";
+            this.btnTogglePassword.Size = new System.Drawing.Size(44, 44);
+            this.btnTogglePassword.TabIndex = 2;
+            this.btnTogglePassword.Text = "👁";
+            this.btnTogglePassword.UseVisualStyleBackColor = false;
+            this.btnTogglePassword.Click += new System.EventHandler(this.BtnTogglePassword_Click);
             // 
             // txtPass
             // 
@@ -256,7 +294,7 @@
             this.txtPass.Margin = new System.Windows.Forms.Padding(4);
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '●';
-            this.txtPass.Size = new System.Drawing.Size(325, 20);
+            this.txtPass.Size = new System.Drawing.Size(281, 20);
             this.txtPass.TabIndex = 1;
             // 
             // lblPassIcon
@@ -533,10 +571,12 @@
         private System.Windows.Forms.Label lblEmailIcon;
         private System.Windows.Forms.Label lblPass;
         private System.Windows.Forms.Panel pnlPassContainer;
+        private System.Windows.Forms.Button btnTogglePassword;
         private System.Windows.Forms.TextBox txtPass;
         private System.Windows.Forms.Label lblPassIcon;
         private System.Windows.Forms.Label lblConfirm;
         private System.Windows.Forms.Panel pnlConfirmContainer;
+        private System.Windows.Forms.Button btnToggleConfirmPassword;
         private System.Windows.Forms.TextBox txtConfirm;
         private System.Windows.Forms.Label lblConfirmIcon;
         private System.Windows.Forms.Button btnRegister;

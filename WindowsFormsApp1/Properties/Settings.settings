@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="GitHubToken" Type="System.String" Scope="User">
-      <Value Profile="(Default)">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</Value>
+      <Value Profile="(Default)">keyapi</Value>
     </Setting>
   </Settings>
 </SettingsFile>

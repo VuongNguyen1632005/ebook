@@ -1,16 +1,16 @@
 ﻿USE master;
 GO
 
--- Xóa database cũ để tạo lại
+-- 1. Làm sạch môi trường cũ (Nếu có)
 IF EXISTS (SELECT * FROM sys.databases WHERE name = 'QL_ebook')
 BEGIN
-    PRINT 'Đang xóa database cũ...'
+    PRINT N'Đang xóa database cũ để tạo mới...'
     ALTER DATABASE QL_ebook SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
     DROP DATABASE QL_ebook;
 END
 GO
 
-PRINT 'Đang tạo database QL_ebook...'
+-- 2. Tạo Database mới
 CREATE DATABASE QL_ebook;
 GO
 
@@ -21,35 +21,32 @@ GO
 -- PHẦN 1: TẠO CÁC BẢNG (TABLES)
 -- =============================================
 
-PRINT '>>> Đang tạo bảng NguoiDung...'
+-- Bảng Người Dùng (Đã XÓA ràng buộc check mật khẩu phức tạp để tránh lỗi logic)
 CREATE TABLE NguoiDung (
     MaNguoiDung INT IDENTITY(1,1) PRIMARY KEY,
     TenDangNhap NVARCHAR(50) NOT NULL UNIQUE,
-    MatKhauHash NVARCHAR(255) NOT NULL,
+    MatKhauHash NVARCHAR(255) NOT NULL, -- Chỉ lưu chuỗi, việc kiểm tra độ mạnh sẽ làm ở C#
     Email NVARCHAR(100) UNIQUE,
     TenHienThi NVARCHAR(100),
+    Theme NVARCHAR(20) DEFAULT 'Light', 
     NgayTao DATETIME NOT NULL DEFAULT GETDATE()
 );
 
-PRINT '>>> Đang tạo bảng NhaXuatBan...'
 CREATE TABLE NhaXuatBan (
     MaNhaXuatBan INT IDENTITY(1,1) PRIMARY KEY,
     TenNXB NVARCHAR(100) NOT NULL
 );
 
-PRINT '>>> Đang tạo bảng TheLoai...'
 CREATE TABLE TheLoai (
     MaTheLoai INT IDENTITY(1,1) PRIMARY KEY,
     TenTheLoai NVARCHAR(100) NOT NULL UNIQUE
 );
 
-PRINT '>>> Đang tạo bảng TacGia...'
 CREATE TABLE TacGia (
     MaTacGia INT IDENTITY(1,1) PRIMARY KEY,
     TenTacGia NVARCHAR(100) NOT NULL
 );
 
-PRINT '>>> Đang tạo bảng Plugin...'
 CREATE TABLE Plugin (
     MaPlugin INT IDENTITY(1,1) PRIMARY KEY,
     TenHienThi NVARCHAR(100) NOT NULL,
@@ -60,7 +57,6 @@ CREATE TABLE Plugin (
     KichHoat BIT NOT NULL DEFAULT 0
 );
 
-PRINT '>>> Đang tạo bảng KeSach...'
 CREATE TABLE KeSach (
     MaKeSach INT IDENTITY(1,1) PRIMARY KEY,
     MaNguoiDung INT NOT NULL,
@@ -70,7 +66,6 @@ CREATE TABLE KeSach (
     CONSTRAINT FK_KeSach_NguoiDung FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung) ON DELETE CASCADE
 );
 
-PRINT '>>> Đang tạo bảng Sach...'
 CREATE TABLE Sach (
     MaSach INT IDENTITY(1,1) PRIMARY KEY,
     MaNguoiDung INT NOT NULL,
@@ -91,18 +86,13 @@ CREATE TABLE Sach (
     CONSTRAINT FK_Sach_NhaXuatBan FOREIGN KEY (MaNhaXuatBan) REFERENCES NhaXuatBan(MaNhaXuatBan)
 );
 
--- BẢNG MỚI: THÙNG RÁC (ĐÃ RÚT GỌN)
-PRINT '>>> Đang tạo bảng ThungRac (MỚI)...'
 CREATE TABLE ThungRac (
     MaRac INT IDENTITY(1,1) PRIMARY KEY,
-    MaSach INT NOT NULL UNIQUE, -- Chỉ cần lưu ID sách để biết sách nào đang ở thùng rác
-    
+    MaSach INT NOT NULL UNIQUE,
     CONSTRAINT FK_ThungRac_Sach FOREIGN KEY (MaSach) REFERENCES Sach(MaSach) ON DELETE CASCADE
 );
 
--- CÁC BẢNG LIÊN KẾT
-
-PRINT '>>> Đang tạo bảng Sach_TacGia...'
+-- CÁC BẢNG LIÊN KẾT (MANY-TO-MANY)
 CREATE TABLE Sach_TacGia (
     MaSach INT NOT NULL,
     MaTacGia INT NOT NULL,
@@ -111,7 +101,6 @@ CREATE TABLE Sach_TacGia (
     CONSTRAINT FK_SachTacGia_TacGia FOREIGN KEY (MaTacGia) REFERENCES TacGia(MaTacGia) ON DELETE CASCADE
 );
 
-PRINT '>>> Đang tạo bảng Sach_TheLoai...'
 CREATE TABLE Sach_TheLoai (
     MaSach INT NOT NULL,
     MaTheLoai INT NOT NULL,
@@ -120,7 +109,6 @@ CREATE TABLE Sach_TheLoai (
     CONSTRAINT FK_SachTheLoai_TheLoai FOREIGN KEY (MaTheLoai) REFERENCES TheLoai(MaTheLoai) ON DELETE CASCADE
 );
 
-PRINT '>>> Đang tạo bảng KeSach_Sach...'
 CREATE TABLE KeSach_Sach (
     MaKeSach INT NOT NULL,
     MaSach INT NOT NULL,
@@ -130,9 +118,7 @@ CREATE TABLE KeSach_Sach (
     CONSTRAINT FK_KeSachSach_Sach FOREIGN KEY (MaSach) REFERENCES Sach(MaSach) ON DELETE CASCADE
 );
 
--- CÁC BẢNG PHỤ THUỘC
-
-PRINT '>>> Đang tạo bảng GhiChu...'
+-- CÁC BẢNG CHỨC NĂNG ĐỌC SÁCH
 CREATE TABLE GhiChu (
     MaGhiChu INT IDENTITY(1,1) PRIMARY KEY,
     MaSach INT NOT NULL,
@@ -147,7 +133,6 @@ CREATE TABLE GhiChu (
     CONSTRAINT FK_GhiChu_Sach FOREIGN KEY (MaSach) REFERENCES Sach(MaSach) ON DELETE CASCADE
 );
 
-PRINT '>>> Đang tạo bảng DanhDauTrang...'
 CREATE TABLE DanhDauTrang (
     MaDanhDau INT IDENTITY(1,1) PRIMARY KEY,
     MaSach INT NOT NULL,
@@ -159,9 +144,6 @@ CREATE TABLE DanhDauTrang (
     CONSTRAINT FK_DanhDauTrang_Sach FOREIGN KEY (MaSach) REFERENCES Sach(MaSach) ON DELETE CASCADE
 );
 
-PRINT 'HOÀN THÀNH TẠO TẤT CẢ CÁC BẢNG!'
-GO
--- Tạo bảng VT_DocSach
 CREATE TABLE VT_DocSach (
     MaVTDoc INT IDENTITY(1,1) PRIMARY KEY,
     MaSach INT NOT NULL,
@@ -174,19 +156,18 @@ CREATE TABLE VT_DocSach (
     CONSTRAINT UK_VTDoc UNIQUE (MaSach, MaNguoiDung)
 );
 
--- Tạo bảng Mục tiêu đọc sách (Goals)
+-- CÁC BẢNG THỐNG KÊ & MỤC TIÊU
 CREATE TABLE MucTieuDocSach (
     MaMucTieu INT PRIMARY KEY IDENTITY(1,1),
     MaNguoiDung INT NOT NULL,
-    LoaiMucTieu NVARCHAR(50) NOT NULL, -- 'DAILY_MINUTES' hoặc 'YEARLY_BOOKS'
-    GiaTriMucTieu INT NOT NULL, -- 30 phút hoặc 12 cuốn
+    LoaiMucTieu NVARCHAR(50) NOT NULL,
+    GiaTriMucTieu INT NOT NULL,
     NgayBatDau DATE NOT NULL DEFAULT GETDATE(),
     DangHoatDong BIT NOT NULL DEFAULT 1,
     NgayHoanThanh DATE NULL,
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung) ON DELETE CASCADE
 );
 
--- Tạo bảng Phiên đọc sách (Reading Sessions)
 CREATE TABLE PhienDocSach (
     MaPhien INT PRIMARY KEY IDENTITY(1,1),
     MaNguoiDung INT NOT NULL,
@@ -199,7 +180,6 @@ CREATE TABLE PhienDocSach (
     FOREIGN KEY (MaSach) REFERENCES Sach(MaSach) ON DELETE CASCADE
 );
 
--- Tạo bảng Streak (Chuỗi ngày đọc liên tục)
 CREATE TABLE ChuoiNgayDocSach (
     MaNguoiDung INT PRIMARY KEY,
     SoNgayHienTai INT NOT NULL DEFAULT 0,
@@ -208,7 +188,6 @@ CREATE TABLE ChuoiNgayDocSach (
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung) ON DELETE CASCADE
 );
 
--- Tạo bảng Lịch sử nhắc nhở
 CREATE TABLE LichSuNhacNho (
     MaNhacNho INT PRIMARY KEY IDENTITY(1,1),
     MaNguoiDung INT NOT NULL,
@@ -217,97 +196,14 @@ CREATE TABLE LichSuNhacNho (
     DaXem BIT NOT NULL DEFAULT 0,
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung) ON DELETE CASCADE
 );
+GO
 
--- Index để tối ưu truy vấn
+-- =============================================
+-- PHẦN 2: INDEX & TRIGGER
+-- =============================================
+
 CREATE INDEX IX_PhienDocSach_NgayDoc ON PhienDocSach(MaNguoiDung, NgayDoc);
 CREATE INDEX IX_MucTieuDocSach_Active ON MucTieuDocSach(MaNguoiDung, DangHoatDong);
-
--- Kiểm tra đã tạo thành công
-SELECT TABLE_NAME 
-FROM INFORMATION_SCHEMA.TABLES 
-WHERE TABLE_NAME IN ('MucTieuDocSach', 'PhienDocSach', 'ChuoiNgayDocSach', 'LichSuNhacNho');
-
--- Tạo Index
 CREATE INDEX IX_VTDoc_MaSach ON VT_DocSach(MaSach);
 CREATE INDEX IX_VTDoc_MaNguoiDung ON VT_DocSach(MaNguoiDung);
-
-PRINT 'Bảng VT_DocSach đã được tạo thành công!';
-GO
--- =============================================
--- PHẦN 2: CHÈN DỮ LIỆU MẪU
--- =============================================
-
-PRINT '--- BẮT ĐẦU CHÈN DỮ LIỆU MẪU ---';
-
--- 1. Dữ liệu cơ bản
-INSERT INTO NguoiDung (TenDangNhap, MatKhauHash, Email, TenHienThi) VALUES
-('admin', 'HASH123', 'admin@sachhub.com', N'Quản Trị Viên'),
-('thanh', 'HASH456', 'thanh@gmail.com', N'Nguyễn Văn Thành');
-
-INSERT INTO TacGia (TenTacGia) VALUES (N'Frank Herbert'), (N'Dan Brown'), (N'J.K. Rowling');
-INSERT INTO TheLoai (TenTheLoai) VALUES (N'Viễn tưởng'), (N'Trinh thám'), (N'Kinh điển');
-INSERT INTO NhaXuatBan (TenNXB) VALUES (N'NXB Kim Đồng'), (N'NXB Trẻ');
-
-INSERT INTO Plugin (TenHienThi, LoaiPlugin, KichHoat) VALUES 
-(N'Trình Dịch Thuật', N'Dịch thuật', 1);
-
-INSERT INTO KeSach (MaNguoiDung, TenKeSach, MoTa) VALUES
-(1, N'Sách Hay Nhất', N'Những cuốn sách tâm đắc'),
-(1, N'Đọc Cuối Tuần', N'Sách thư giãn');
-
--- 2. Sách
-INSERT INTO Sach (MaNguoiDung, MaNhaXuatBan, TieuDe, MoTa, DinhDang, TongSoTrang, DuongDanFile, TrangHienTai, YeuThich)
-VALUES
-(1, 2, N'Dune', N'Hành tinh cát...', 'EPUB', 800, N'C:\Books\dune.epub', 100, 1),
-(1, 1, N'Mật mã Da Vinci', N'Bí ẩn tôn giáo...', 'PDF', 600, N'C:\Books\davinci.pdf', 50, 0),
-(1, 1, N'Harry Potter 1', N'Cậu bé phù thủy...', 'MOBI', 300, N'C:\Books\hp1.mobi', 10, 0);
-
--- 3. Liên kết
-INSERT INTO Sach_TacGia (MaSach, MaTacGia) VALUES (1, 1), (2, 2), (3, 3);
-INSERT INTO Sach_TheLoai (MaSach, MaTheLoai) VALUES (1, 1), (2, 2), (3, 1);
-INSERT INTO KeSach_Sach (MaKeSach, MaSach) VALUES (1, 1), (1, 2);
-INSERT INTO GhiChu (MaSach, NoiDungTrichDan, GhiChuCuaNguoiDung, MauSac) VALUES
-(1, N'Nước là sự sống', N'Câu này hay', '#FFFF00');
-
--- 4. Đưa vào Thùng Rác (Đã sửa gọn lại)
-PRINT 'Đang đưa sách ID 3 vào thùng rác...'
-INSERT INTO ThungRac (MaSach) VALUES (3);
-
-PRINT '--- HOÀN THÀNH TOÀN BỘ ---';
-GO
-
--- Thêm cột Theme nếu chưa có (Mặc định là Light)
-IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'NguoiDung' AND COLUMN_NAME = 'Theme')
-BEGIN
-    ALTER TABLE NguoiDung ADD Theme NVARCHAR(20) DEFAULT 'Light';
-    PRINT 'Đã thêm cột Theme thành công!';
-END
-
-
-
-CREATE TRIGGER trg_KiemTraTrungSach
-ON Sach
-AFTER INSERT
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- 1. Kiểm tra nếu có sự trùng lặp
-    IF EXISTS (
-        SELECT 1
-        FROM Sach s
-        INNER JOIN inserted i ON s.TieuDe = i.TieuDe AND s.MaNguoiDung = i.MaNguoiDung
-        WHERE s.MaSach <> i.MaSach
-    )
-    BEGIN
-        -- 2. Khai báo biến để lấy tên sách bị trùng (Tránh lỗi cú pháp RAISERROR)
-        DECLARE @TenSachBiTrung NVARCHAR(255);
-        SELECT TOP 1 @TenSachBiTrung = TieuDe FROM inserted;
-
-        -- 3. Thông báo lỗi và Rollback
-        RAISERROR (N'Lỗi: Cuốn sách "%s" đã tồn tại trong thư viện của bạn!', 16, 1, @TenSachBiTrung);
-        
-        ROLLBACK TRANSACTION;
-    END
-END;
 GO

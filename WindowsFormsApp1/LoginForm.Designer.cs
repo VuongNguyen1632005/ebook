@@ -38,6 +38,7 @@
             this.lblRegister = new System.Windows.Forms.Label();
             this.btnLogin = new System.Windows.Forms.Button();
             this.pnlPassContainer = new System.Windows.Forms.Panel();
+            this.btnTogglePassword = new System.Windows.Forms.Button();
             this.pnlPassBorder = new System.Windows.Forms.Panel();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.pnlPassIcon = new System.Windows.Forms.Panel();
@@ -202,6 +203,7 @@
             // pnlPassContainer
             // 
             this.pnlPassContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(50)))));
+            this.pnlPassContainer.Controls.Add(this.btnTogglePassword);
             this.pnlPassContainer.Controls.Add(this.txtPass);
             this.pnlPassContainer.Controls.Add(this.pnlPassIcon);
             this.pnlPassContainer.Location = new System.Drawing.Point(50, 310);
@@ -210,6 +212,23 @@
             this.pnlPassContainer.Padding = new System.Windows.Forms.Padding(1);
             this.pnlPassContainer.Size = new System.Drawing.Size(378, 48);
             this.pnlPassContainer.TabIndex = 6;
+            // 
+            // btnTogglePassword
+            // 
+            this.btnTogglePassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(50)))));
+            this.btnTogglePassword.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTogglePassword.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnTogglePassword.FlatAppearance.BorderSize = 0;
+            this.btnTogglePassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTogglePassword.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnTogglePassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.btnTogglePassword.Location = new System.Drawing.Point(333, 1);
+            this.btnTogglePassword.Name = "btnTogglePassword";
+            this.btnTogglePassword.Size = new System.Drawing.Size(44, 46);
+            this.btnTogglePassword.TabIndex = 2;
+            this.btnTogglePassword.Text = "👁";
+            this.btnTogglePassword.UseVisualStyleBackColor = false;
+            this.btnTogglePassword.Click += new System.EventHandler(this.BtnTogglePassword_Click);
             // 
             // txtPass
             // 
@@ -222,7 +241,7 @@
             this.txtPass.Margin = new System.Windows.Forms.Padding(4);
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '●';
-            this.txtPass.Size = new System.Drawing.Size(320, 20);
+            this.txtPass.Size = new System.Drawing.Size(276, 20);
             this.txtPass.TabIndex = 1;
             this.txtPass.Enter += new System.EventHandler(this.TxtPass_Enter);
             this.txtPass.Leave += new System.EventHandler(this.TxtPass_Leave);
@@ -409,6 +428,7 @@
         private System.Windows.Forms.Label lblUserIcon;
         private System.Windows.Forms.Label lblPass;
         private System.Windows.Forms.Panel pnlPassContainer;
+        private System.Windows.Forms.Button btnTogglePassword;
         private System.Windows.Forms.TextBox txtPass;
         private System.Windows.Forms.Panel pnlPassIcon;
         private System.Windows.Forms.Label lblPassIcon;

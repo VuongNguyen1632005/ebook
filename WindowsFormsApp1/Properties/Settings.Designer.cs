@@ -25,7 +25,7 @@ namespace WindowsFormsApp1.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("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")]
+        [global::System.Configuration.DefaultSettingValueAttribute("keyapi")]
         public string GitHubToken {
             get {
                 return ((string)(this["GitHubToken"]));

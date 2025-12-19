@@ -11,6 +11,8 @@ namespace WindowsFormsApp1.Forms
     public partial class RegisterForm : Form
     {
         public User RegisteredUser { get; private set; }
+        private bool isPasswordVisible = false;
+        private bool isConfirmPasswordVisible = false;
 
         public RegisterForm()
         {
@@ -64,6 +66,42 @@ namespace WindowsFormsApp1.Forms
 
         #endregion
 
+        #region Event Handlers - Password Toggle
+
+        private void BtnTogglePassword_Click(object sender, EventArgs e)
+        {
+            isPasswordVisible = !isPasswordVisible;
+            
+            if (isPasswordVisible)
+            {
+                txtPass.PasswordChar = '\0';
+                btnTogglePassword.Text = "🙈";
+            }
+            else
+            {
+                txtPass.PasswordChar = '●';
+                btnTogglePassword.Text = "👁";
+            }
+        }
+
+        private void BtnToggleConfirmPassword_Click(object sender, EventArgs e)
+        {
+            isConfirmPasswordVisible = !isConfirmPasswordVisible;
+            
+            if (isConfirmPasswordVisible)
+            {
+                txtConfirm.PasswordChar = '\0';
+                btnToggleConfirmPassword.Text = "🙈";
+            }
+            else
+            {
+                txtConfirm.PasswordChar = '●';
+                btnToggleConfirmPassword.Text = "👁";
+            }
+        }
+
+        #endregion
+
         #region Event Handlers - Register Button
 
         private void BtnRegister_Click(object sender, EventArgs e)
@@ -97,6 +135,14 @@ namespace WindowsFormsApp1.Forms
             if (txtPass.Text.Length < 6)
             {
                 MessageBox.Show("Mật khẩu phải có ít nhất 6 ký tự!", "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPass.Focus();
+                return;
+            }
+
+            if (!SecurityHelper.IsValidPassword(txtPass.Text))
+            {
+                MessageBox.Show("Mật khẩu phải ít nhất 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt!", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtPass.Focus();
                 return;
