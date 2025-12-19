@@ -284,3 +284,30 @@ BEGIN
 END
 
 
+
+CREATE TRIGGER trg_KiemTraTrungSach
+ON Sach
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- 1. Kiểm tra nếu có sự trùng lặp
+    IF EXISTS (
+        SELECT 1
+        FROM Sach s
+        INNER JOIN inserted i ON s.TieuDe = i.TieuDe AND s.MaNguoiDung = i.MaNguoiDung
+        WHERE s.MaSach <> i.MaSach
+    )
+    BEGIN
+        -- 2. Khai báo biến để lấy tên sách bị trùng (Tránh lỗi cú pháp RAISERROR)
+        DECLARE @TenSachBiTrung NVARCHAR(255);
+        SELECT TOP 1 @TenSachBiTrung = TieuDe FROM inserted;
+
+        -- 3. Thông báo lỗi và Rollback
+        RAISERROR (N'Lỗi: Cuốn sách "%s" đã tồn tại trong thư viện của bạn!', 16, 1, @TenSachBiTrung);
+        
+        ROLLBACK TRANSACTION;
+    END
+END;
+GO
